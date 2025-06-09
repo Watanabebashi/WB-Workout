@@ -3,8 +3,8 @@
 
 技術スタックは以下の通り
 
-- Go
-- Gin
+- Python
+- Flask
 - JavaScript
 - Bootstrap or Tailwind テンプレート(未定)
 - MySQL
