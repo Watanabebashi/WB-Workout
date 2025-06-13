@@ -1,6 +1,3 @@
-from . import db
-from datetime import datetime, date
-
 class User(db.Model):
     __tablename__ = 'users'
 
