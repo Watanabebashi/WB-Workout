@@ -6,7 +6,7 @@
 - Python
 - Flask
 - JavaScript
-- Bootstrap or Tailwind テンプレート(未定)
+- Bootstrapテンプレート
 - MySQL
 
 ## 注意事項
