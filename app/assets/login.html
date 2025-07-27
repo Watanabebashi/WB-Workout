@@ -1,0 +1,61 @@
+<!-- 作りかけのプロトタイプ -->
+<!DOCTYPE html>
+<html lang="ja"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WB-Workout - ログイン</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style type="text/tailwindcss">
+      :root {
+        --primary-color: #2a8fed;
+        --primary-hover-color: #1e78d6;
+      }
+      body {
+        font-family: 'Lexend', 'Noto Sans JP', sans-serif;
+      }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+<div class="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12">
+<div class="w-full max-w-md space-y-8">
+<div>
+<div class="flex items-center justify-center gap-3">
+<!-- ロゴ画像をここに追加 -->
+<h1 class="text-3xl font-bold tracking-tighter text-gray-900">WB-Workout</h1>
+</div>
+<h2 class="mt-6 text-center text-2xl font-bold tracking-tight text-gray-800">おかえりなさい！</h2>
+<p class="mt-2 text-center text-sm text-gray-600">アカウントにログインしてください</p>
+</div>
+<form action="#" class="mt-8 space-y-6" method="POST">
+<div class="space-y-4 rounded-md shadow-sm">
+<div>
+<label class="sr-only" for="email-address">メールアドレス</label>
+<input autocomplete="email" class="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-3 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-[var(--primary-color)] focus:outline-none focus:ring-[var(--primary-color)] sm:text-sm" id="email-address" name="email" placeholder="メールアドレス" required="" type="email"/>
+</div>
+<div>
+<label class="sr-only" for="password">パスワード</label>
+<input autocomplete="current-password" class="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-3 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-[var(--primary-color)] focus:outline-none focus:ring-[var(--primary-color)] sm:text-sm" id="password" name="password" placeholder="パスワード" required="" type="password"/>
+</div>
+</div>
+<div class="flex items-center justify-end">
+<div class="text-sm">
+<a class="font-medium text-[var(--primary-color)] hover:text-[var(--primary-hover-color)]" href="#">パスワードをお忘れですか？</a>
+</div>
+</div>
+<div>
+<button class="group relative flex w-full justify-center rounded-md border border-transparent bg-[var(--primary-color)] px-4 py-3 text-sm font-semibold text-white hover:bg-[var(--primary-hover-color)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] focus:ring-offset-2" type="submit">
+              ログイン
+            </button>
+</div>
+</form>
+<div class="mt-6 text-center text-sm text-gray-600">
+            アカウントをお持ちでないですか？
+            <a class="font-medium text-[var(--primary-color)] hover:text-[var(--primary-hover-color)]" href="#">新規登録</a>
+</div>
+</div>
+</div>
+</body></html>
