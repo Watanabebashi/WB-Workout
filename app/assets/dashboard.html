@@ -8,6 +8,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <style type="text/tailwindcss"></style>
 <style type="text/tailwindcss">
         :root {
             --primary-color: #2a8fed;
@@ -43,7 +44,7 @@
 <div class="flex items-center gap-4">
 <a class="flex items-center gap-2 text-xl md:text-2xl font-bold text-[var(--primary-color)]" href="#">
 <!-- ロゴ画像をここに追加 -->
-<span class="hidden sm:inline">WB-Workout</span>
+<span class="inline">WB-Workout</span>
 </a>
 <nav class="hidden md:flex items-center gap-6 ml-8">
 <a class="nav-link text-sm font-medium text-[var(--text-muted-color)] hover:text-[var(--primary-color)] transition-colors duration-200" href="#">ホーム</a>
@@ -60,7 +61,7 @@
 <input class="form-input w-full max-w-xs rounded-md border-[var(--border-color)] bg-transparent pl-10 text-sm focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)]" placeholder="検索..." type="search"/>
 </div>
 <button class="primary-button hidden sm:block">新しいワークアウト</button>
-<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("");'></div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("{{ user.profile_image_url }}");'></div>
 <!--↑ユーザプロフ画像 -->
 <button class="md:hidden p-2" id="mobile-menu-button">
 <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
@@ -85,11 +86,13 @@
 <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">ワークアウトダッシュボード</h1>
 <p class="text-[var(--text-muted-color)] mt-1 text-sm sm:text-base">あなたの進捗をグラフと表で確認しましょう。</p>
 </div>
+<!-- 開発中
 <div class="flex items-center gap-2">
 <button class="text-sm font-medium px-3 py-1.5 rounded-md bg-[var(--primary-color)] text-white">日別</button>
 <button class="text-sm font-medium px-3 py-1.5 rounded-md bg-gray-200 text-[var(--text-muted-color)] hover:bg-gray-300">週別</button>
 <button class="text-sm font-medium px-3 py-1.5 rounded-md bg-gray-200 text-[var(--text-muted-color)] hover:bg-gray-300">月別</button>
 </div>
+-->
 </div>
 <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 <div class="lg:col-span-2 flex flex-col gap-6">
@@ -97,55 +100,29 @@
 <h2 class="font-semibold text-lg mb-4">総リフト重量の推移</h2>
 <div class="flex items-center gap-2 text-sm mb-4">
 <p class="text-[var(--text-muted-color)]">過去7日間</p>
+<!-- 過去7日間とあるが、筋トレしていない日は表示を省く -->
 <span class="flex items-center text-green-600 font-semibold">
 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path clip-rule="evenodd" d="M10 17a.75.75 0 01-.75-.75V5.612L6.22 8.78a.75.75 0 01-1.06-1.06l4.25-4.25a.75.75 0 011.06 0l4.25 4.25a.75.75 0 11-1.06 1.06L10.75 5.612V16.25A.75.75 0 0110 17z" fill-rule="evenodd"></path></svg>
 5%
 </span>
 </div>
 <div class="h-52 sm:h-64 relative">
-<svg class="absolute inset-0" fill="none" height="100%" preserveAspectRatio="none" viewBox="0 0 400 160" width="100%" xmlns="http://www.w3.org/2000/svg">
-<g transform="translate(0, 0)">
-<path d="M0 130L50 110L100 120L150 90L200 100L250 60L300 80L350 50L400 70V160H0V130Z" fill="url(#paint0_linear_area)" fill-opacity="0.3"></path>
-<path d="M0 130L50 110L100 120L150 90L200 100L250 60L300 80L350 50L400 70" stroke="var(--primary-color)" stroke-width="2"></path>
-<defs>
-<linearGradient gradientUnits="userSpaceOnUse" id="paint0_linear_area" x1="200" x2="200" y1="50" y2="160">
-<stop stop-color="var(--primary-color)"></stop>
-<stop offset="1" stop-color="var(--primary-color)" stop-opacity="0"></stop>
-</linearGradient>
-</defs>
-</g>
-</svg>
-<div class="absolute bottom-0 left-0 right-0 h-px bg-[var(--border-color)]"></div>
-</div>
-<div class="flex justify-between mt-2 text-xs text-[var(--text-muted-color)] border-t border-dashed border-[var(--border-color)] pt-2 overflow-x-auto">
-<span class="flex-shrink-0 px-1">7月14日</span>
-<span class="flex-shrink-0 px-1">7月15日</span>
-<span class="flex-shrink-0 px-1">7月16日</span>
-<span class="flex-shrink-0 px-1">7月17日</span>
-<span class="flex-shrink-0 px-1">7月18日</span>
-<span class="flex-shrink-0 px-1">7月19日</span>
-<span class="flex-shrink-0 px-1">7月20日</span>
+    <canvas id="totalLiftChart"></canvas>
 </div>
 </div>
 </div>
 <div class="flex flex-col gap-6">
 <div class="rounded-md border border-[var(--border-color)] p-4 sm:p-6 bg-[var(--card-background-color)] shadow-sm">
 <h2 class="font-semibold text-lg mb-4">ジム訪問回数</h2>
-<p class="text-4xl font-bold text-[var(--primary-color)]">12回</p>
+<div class="flex items-end gap-8">
+<div>
+<p class="text-4xl font-bold text-[var(--primary-color)]">{{ stats.gym_visits.monthly_count }}回</p>
 <p class="text-[var(--text-muted-color)] text-sm mt-1">今月</p>
-<div class="h-32 mt-4">
-<div class="grid h-full grid-cols-4 gap-2 items-end">
-<div class="bg-[var(--primary-color)] rounded-t-sm" style="height: 60%;"></div>
-<div class="bg-[var(--primary-color)] rounded-t-sm" style="height: 100%;"></div>
-<div class="bg-[var(--primary-color)] rounded-t-sm" style="height: 80%;"></div>
-<div class="bg-gray-200 rounded-t-sm" style="height: 0%;"></div>
 </div>
+<div>
+<p class="text-4xl font-bold text-[var(--primary-color)]">{{ stats.gym_visits.yearly_count }}回</p>
+<p class="text-[var(--text-muted-color)] text-sm mt-1">今年</p>
 </div>
-<div class="flex justify-between mt-2 text-xs text-[var(--text-muted-color)]">
-<span>第1週</span>
-<span>第2週</span>
-<span>第3週</span>
-<span>第4週</span>
 </div>
 </div>
 </div>
@@ -153,7 +130,6 @@
 <section>
 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4">
 <h2 class="text-xl font-bold">ワークアウト履歴</h2>
-<input class="form-input w-full sm:w-auto rounded-md border-[var(--border-color)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)] text-sm" type="date" value="2024-07-20"/>
 </div>
 <div class="overflow-x-auto rounded-md border border-[var(--border-color)] bg-[var(--card-background-color)] shadow-sm">
 <table class="w-full text-sm text-left">
@@ -167,47 +143,28 @@
 </tr>
 </thead>
 <tbody class="divide-y divide-[var(--border-color)]">
-<tr class="hover:bg-gray-50">
-<td class="px-4 py-4 whitespace-nowrap font-medium">2024-07-20</td>
-<td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)]">胸 &amp; 三頭筋</td>
-<td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)] text-center">6</td>
-<td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)] hidden md:table-cell">10, 8, 8, 12, 10, 10</td>
-<td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)] hidden sm:table-cell">60, 50, 20</td>
-</tr>
-<tr class="hover:bg-gray-50">
-<td class="px-4 py-4 whitespace-nowrap font-medium">2024-07-18</td>
-<td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)]">脚 &amp; 肩</td>
-<td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)] text-center">5</td>
-<td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)] hidden md:table-cell">10, 10, 8, 12, 12</td>
-<td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)] hidden sm:table-cell">100, 20</td>
-</tr>
-<tr class="hover:bg-gray-50">
-<td class="px-4 py-4 whitespace-nowrap font-medium">2024-07-17</td>
-<td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)]">背中 &amp; 二頭筋</td>
-<td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)] text-center">7</td>
-<td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)] hidden md:table-cell">5, 8, 8, 12, 12, 10, 10</td>
-<td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)] hidden sm:table-cell">120, 50, 15</td>
-</tr>
-<tr class="hover:bg-gray-50">
-<td class="px-4 py-4 whitespace-nowrap font-medium">2024-07-15</td>
-<td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)]">胸 &amp; 三頭筋</td>
-<td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)] text-center">6</td>
-<td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)] hidden md:table-cell">8, 8, 6, 10, 10, 8</td>
-<td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)] hidden sm:table-cell">65, 50, 22</td>
-</tr>
-<tr class="hover:bg-gray-50">
-<td class="px-4 py-4 whitespace-nowrap font-medium">2024-07-13</td>
-<td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)]">脚 &amp; 肩</td>
-<td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)] text-center">5</td>
-<td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)] hidden md:table-cell">8, 8, 6, 10, 10</td>
-<td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)] hidden sm:table-cell">105, 20</td>
-</tr>
+    {% for workout in workout_history %}
+    <tr class="hover:bg-gray-50">
+        <td class="px-4 py-4 whitespace-nowrap font-medium">{{ workout.date.strftime('%Y-%m-%d') }}</td>
+        <td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)]">{{ workout.type }}</td>
+        <td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)] text-center">{{ workout.sets }}</td>
+        <td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)] hidden md:table-cell">{{ workout.reps }}</td>
+        <td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)] hidden sm:table-cell">{{ workout.weights_kg }}</td>
+    </tr>
+    {% else %}
+    <tr>
+        <td colspan="5" class="text-center py-8 text-[var(--text-muted-color)]">ワークアウト履歴がありません。</td>
+    </tr>
+    {% endfor %}
 </tbody>
 </table>
 </div>
 </section>
 </div>
 </main>
+<footer class="border-t border-[var(--border-color)] py-6 text-center text-sm text-[var(--text-muted-color)]">
+  <p>Powered by WB-Workout</p>
+</footer>
 </div>
 </div>
 <script>
@@ -216,6 +173,96 @@
     mobileMenuButton.addEventListener('click', () => {
         mobileMenu.classList.toggle('active');
     });
-</script>
 
-</body></html>
+    const workoutData = [
+        {% for workout in workout_history_7times %}
+        {
+            date: '{{ workout.date.strftime('%Y-%m-%d') }}',
+            weight: {{ workout.weights_kg}}
+        }{% if not loop.last %},{% endif %}
+        {% endfor %}
+    ];
+    
+    const ctx = document.getElementById('totalLiftChart').getContext('2d');
+
+    const primaryColor = '#2a8fed';
+    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, `${primaryColor}4D`);
+    gradient.addColorStop(1, `${primaryColor}00`);
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: workoutData.map(d => d.date),
+            datasets: [{
+                label: '総リフト重量',
+                data: workoutData.map(d => d.weight),
+                borderColor: primaryColor,
+                backgroundColor: gradient,
+                fill: true,
+                tension: 0.4,
+                borderWidth: 2,
+                pointRadius: 0,
+                pointHoverRadius: 6,
+                pointHoverBackgroundColor: primaryColor,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            },
+            scales: {
+                y: {
+                    display: true,
+                    position: 'right',
+                    grid: {
+                        color: '#e5e7eb',
+                    },
+                    ticks: {
+                        color: '#6b7280',
+                        maxTicksLimit: 6,
+                        callback: function(value) {
+                            return value.toLocaleString() + ' kg';
+                        }
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false,
+                    },
+                    ticks: {
+                        color: '#6b7280',
+                        font: { size: 11, },
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    enabled: true, 
+                    backgroundColor: '#111827',
+                    titleFont: { size: 14, weight: 'bold' },
+                    bodyFont: { size: 12 },
+                    padding: 12,
+                    cornerRadius: 6,
+                    displayColors: false,
+                    callbacks: {
+                        title: function(context) {
+                            return context[0].label;
+                        },
+                        label: function(context) {
+                            return `合計: ${context.parsed.y.toLocaleString()} kg`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>
