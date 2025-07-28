@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width-device-width, initial-scale=1.0" name="viewport" />
+    <title>WB-Workout - ワークアウト追加</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon" />
+    <style type="text/tailwindcss">
+        :root {
+            --primary-color: #2a8fed;
+            --primary-hover-color: #1e73db;
+            --text-color: #111827;
+            --text-muted-color: #6b7280;
+            --background-color: #f9fafb;
+            --card-background-color: #ffffff;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .primary-button {
+            @apply bg-[var(--primary-color)] text-white font-semibold py-2.5 px-5 rounded-md shadow-sm hover:bg-[var(--primary-hover-color)] transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary-color)];
+        }
+
+        .secondary-button {
+            @apply bg-gray-200 text-[var(--text-muted-color)] font-semibold py-2 px-4 rounded-md hover:bg-gray-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400;
+        }
+        
+        .form-input {
+            @apply w-full rounded-md border-[var(--border-color)] bg-[var(--card-background-color)] text-[var(--text-color)] placeholder-[var(--text-muted-color)] focus:border-[var(--primary-color)] focus:ring-[var(--primary-color)];
+        }
+        
+        .nav-link.active {
+            @apply text-[var(--primary-color)] font-semibold border-b-2 border-[var(--primary-color)];
+        }
+        
+        .mobile-menu {
+            @apply hidden md:hidden absolute top-full left-0 w-full bg-[var(--card-background-color)] shadow-md;
+        }
+
+        .mobile-menu.active {
+            @apply block;
+        }
+    </style>
+</head>
+<body>
+    <div class="relative flex size-full min-h-screen flex-col">
+        <header class="sticky top-0 z-20 flex items-center justify-between whitespace-nowrap border-b border-solid border-[var(--border-color)] bg-[var(--card-background-color)] px-4 py-4 shadow-sm sm:px-6">
+            <div class="flex items-center gap-4">
+                <a class="flex items-center gap-2 text-xl font-bold text-[var(--primary-color)] md:text-2xl" href="#">
+                    <span>WB-Workout</span>
+                </a>
+                <nav class="ml-8 hidden items-center gap-6 md:flex">
+                <!--
+                    <a class="text-sm font-medium text-[var(--text-muted-color)] transition-colors duration-200 hover:text-[var(--primary-color)]" href="#">ダッシュボード</a>
+                    <a class="nav-link active pb-1 text-sm font-medium transition-colors duration-200" href="#">ワークアウト</a>
+                    <a class="text-sm font-medium text-[var(--text-muted-color)] transition-colors duration-200 hover:text-[var(--primary-color)]" href="#">進捗</a>
+                    <a class="text-sm font-medium text-[var(--text-muted-color)] transition-colors duration-200 hover:text-[var(--primary-color)]" href="#">コミュニティ</a>
+                -->
+                </nav>
+            </div>
+            <div class="flex items-center gap-2 sm:gap-4">
+                <!-- アイコン -->
+                <div class="aspect-square size-10 rounded-full bg-cover bg-center" style='background-image: url("");'></div>
+                <button class="p-2 md:hidden" id="mobile-menu-button">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+            <nav class="mobile-menu" id="mobile-menu">
+            <!--
+                <a class="block px-4 py-3 text-sm text-[var(--text-muted-color)] hover:bg-gray-100" href="#">ダッシュボード</a>
+                <a class="block bg-gray-100 px-4 py-3 text-sm font-semibold text-[var(--primary-color)]" href="#">ワークアウト</a>
+                <a class="block px-4 py-3 text-sm text-[var(--text-muted-color)] hover:bg-gray-100" href="#">進捗</a>
+                <a class="block px-4 py-3 text-sm text-[var(--text-muted-color)] hover:bg-gray-100" href="#">コミュニティ</a>
+            -->
+            </nav>
+        </header>
+
+        <main class="flex flex-1 justify-center px-4 py-8 sm:px-6 lg:px-8">
+            <div class="w-full max-w-2xl space-y-8">
+                <header>
+                    <h1 class="text-2xl font-bold tracking-tight sm:text-3xl">ワークアウト追加</h1>
+                    <p class="mt-1 text-[var(--text-muted-color)] sm:text-base">最新のトレーニングセッションを記録しましょう。</p>
+                </header>
+
+                <div class="rounded-md border border-[var(--border-color)] bg-[var(--card-background-color)] p-6 shadow-sm sm:p-8">
+                    <form class="space-y-6" id="workout-form">
+                        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                            <div>
+                                <label class="block text-sm font-medium text-[var(--text-color)]" for="date">日付</label>
+                                <input class="form-input mt-1" id="date" name="date" type="date" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-[var(--text-color)]" for="exercise-select">種目</label>
+                                <select class="form-input mt-1" id="exercise-select" name="exercise-select">
+                                    <option value="">種目を選択</option>
+                                    <option>ベンチプレス</option>
+                                    <option>スクワット</option>
+                                    <option>デッドリフト</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-[var(--text-color)]" for="exercise-custom">または新しい種目を入力</label>
+                            <input class="form-input mt-1" id="exercise-custom" name="exercise-custom" placeholder="例：バイセップカール" type="text" />
+                        </div>
+
+                        <div class="space-y-4">
+                            <h3 class="text-lg font-semibold text-[var(--text-color)]">セット</h3>
+                            <div class="overflow-x-auto rounded-md border border-[var(--border-color)]">
+                                <table class="min-w-full divide-y divide-[var(--border-color)]">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[var(--text-muted-color)]" scope="col">セット</th>
+                                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[var(--text-muted-color)]" scope="col">レップ</th>
+                                            <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-[var(--text-muted-color)]" scope="col">重量 (kg)</th>
+                                            <th class="relative px-4 py-3" scope="col"><span class="sr-only">削除</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-[var(--border-color)] bg-[var(--card-background-color)]" id="sets-table-body">
+                                        </tbody>
+                                </table>
+                            </div>
+                            <div class="flex justify-end">
+                                <button class="secondary-button" id="add-set-btn" type="button">セットを追加</button>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <h3 class="text-lg font-semibold text-[var(--text-color)]">前回のワークアウト</h3>
+                            <div class="rounded-md border border-dashed border-[var(--border-color)] bg-[var(--background-color)] p-4">
+                                <p class="text-sm text-[var(--text-muted-color)]"><span class="font-medium text-[var(--text-color)]">2024-01-15</span> の記録:</p>
+                                <div class="mt-2 flex items-center justify-between">
+                                    <p class="font-semibold text-[var(--text-color)]">3セット 8レップ 50kg</p>
+                                    <button class="text-sm font-semibold text-[var(--primary-color)] transition-all hover:underline" id="use-template-btn" type="button">テンプレートとして使用</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-4">
+                            <button class="primary-button w-full" type="submit">ワークアウトを保存</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="mt-auto border-t border-[var(--border-color)] py-6 text-center text-sm text-[var(--text-muted-color)]">
+            <p>Powered by WB-Workout</p>
+        </footer>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const dateInput = document.getElementById('date');
+            const workoutForm = document.getElementById('workout-form');
+            const setsTableBody = document.getElementById('sets-table-body');
+            const addSetBtn = document.getElementById('add-set-btn');
+            const useTemplateBtn = document.getElementById('use-template-btn');
+            const exerciseSelect = document.getElementById('exercise-select');
+            const exerciseCustom = document.getElementById('exercise-custom');
+
+            const updateSetNumbers = () => {
+                const setRows = setsTableBody.querySelectorAll('tr');
+                setRows.forEach((row, index) => {
+                    row.querySelector('td:first-child').textContent = index + 1;
+                });
+            };
+            
+            /**
+             * 新しいセットの行をテーブルに追加する
+             * @param {string} reps - レップ数の初期値
+             * @param {string} weight - 重量(kg)の初期値
+             */
+            const addSetRow = (reps = '', weight = '') => {
+                const newRow = document.createElement('tr');
+                const setNumber = setsTableBody.rows.length + 1;
+                
+                newRow.innerHTML = `
+                    <td class="whitespace-nowrap px-4 py-3 text-sm font-medium text-[var(--text-color)]">${setNumber}</td>
+                    <td class="px-4 py-2"><input class="form-input h-10 w-24 text-center" name="reps" type="number" value="${reps}" /></td>
+                    <td class="px-4 py-2"><input class="form-input h-10 w-24 text-center" name="weight" type="number" value="${weight}" /></td>
+                    <td class="px-4 py-3 text-right">
+                        <button class="delete-set-btn text-xl text-[var(--text-muted-color)] transition-colors hover:text-red-500" type="button">×</button>
+                    </td>
+                `;
+                setsTableBody.appendChild(newRow);
+            };
+
+            // 日付入力に今日の日付を設定
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            dateInput.value = `${year}-${month}-${day}`;
+
+            // 初期状態で3セット追加、この部分は将来的にカスタマイズできたらいいかも
+            for (let i = 0; i < 3; i++) {
+                addSetRow();
+            }
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+            });
+            
+            // セット追加ボタン
+            addSetBtn.addEventListener('click', () => {
+                addSetRow();
+            });
+
+            // セット削除
+            setsTableBody.addEventListener('click', (event) => {
+                if (event.target.classList.contains('delete-set-btn')) {
+                    event.target.closest('tr').remove();
+                    updateSetNumbers();
+                }
+            });
+            
+            // テンプレートとして使用ボタン
+            useTemplateBtn.addEventListener('click', () => {
+                setsTableBody.innerHTML = ''; 
+                for (let i = 0; i < 3; i++) {
+                    addSetRow('8', '50');
+                }
+            });
+            
+            exerciseSelect.addEventListener('change', () => {
+                if (exerciseSelect.value) {
+                    exerciseCustom.value = '';
+                }
+            });
+            
+            exerciseCustom.addEventListener('input', () => {
+                if (exerciseCustom.value) {
+                    exerciseSelect.value = '';
+                }
+            });
+
+            workoutForm.addEventListener('submit', (event) => {
+                event.preventDefault(); 
+                
+                const formData = new FormData(workoutForm);
+                const sets = [];
+                const repsInputs = formData.getAll('reps');
+                const weightInputs = formData.getAll('weight');
+
+                repsInputs.forEach((rep, index) => {
+                    sets.push({
+                        set: index + 1,
+                        reps: rep ? parseInt(rep, 10) : 0,
+                        weight: weightInputs[index] ? parseFloat(weightInputs[index]) : 0
+                    });
+                });
+
+                const workoutData = {
+                    date: formData.get('date'),
+                    exercise: formData.get('exercise-select') || formData.get('exercise-custom') || 'N/A',
+                    sets: sets
+                };
+                
+                console.log('保存されたワークアウトデータ:', workoutData);
+                alert('ワークアウトがコンソールに保存されました！');
+            });
+        });
+    </script>
+</body>
+</html>
