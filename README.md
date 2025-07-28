@@ -6,8 +6,7 @@
 - Python
 - Flask
 - JavaScript
-- Bootstrap or Tailwind テンプレート(未定)
-- MySQL
+- MySQL/MariaDB
 
 ## 注意事項
 本Webアプリは現在開発中であり、動作しない。
