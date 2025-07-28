@@ -143,7 +143,7 @@
 </tr>
 </thead>
 <tbody class="divide-y divide-[var(--border-color)]">
-    {% for workout in workout_history %}
+    {% for workout in workout_history_7times %}
     <tr class="hover:bg-gray-50">
         <td class="px-4 py-4 whitespace-nowrap font-medium">{{ workout.date.strftime('%Y-%m-%d') }}</td>
         <td class="px-4 py-4 whitespace-nowrap text-[var(--text-muted-color)]">{{ workout.type }}</td>
