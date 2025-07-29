@@ -63,3 +63,12 @@ class WorkoutLog(db.Model):
 
     def __repr__(self):
         return f'<Log: Set {self.set_number} of {self.exercise.name}>'
+    
+class GymAdmissionLog(db.model):
+    __tablename__ = 'gym_admission_logs'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    gym_name = db.Column(db.String(120), nullable=False)
+    enter_at = db.Column(db.DateTime, nullable=False)
+    exit_at = db.Column(db.DateTime, nullable=False)
