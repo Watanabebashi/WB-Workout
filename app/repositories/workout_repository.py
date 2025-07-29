@@ -19,7 +19,7 @@ class WorkoutRepository:
         return workout
 
     def delete_workout(self, workout_id: int) -> bool:
-        workout = self.get_by_id(workout_id)
+        workout = self.get_workout_by_id(workout_id)
         if workout:
             db.session.delete(workout)
             db.session.commit()
