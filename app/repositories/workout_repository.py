@@ -1,5 +1,5 @@
-from app.models import db
-from app.models.workout import Workout
+from app import db
+from app.models import Workout
 from typing import List
 
 class WorkoutRepository:
