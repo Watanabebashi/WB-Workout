@@ -1,31 +1,29 @@
+from app.models import db
 from app.models.workout import Workout
+from typing import List
 
 class WorkoutRepository:
-    def __init__(self):
-        self.workouts = []
+    def add_workout(self, workout: Workout) -> Workout:
+        db.session.add(workout)
+        db.session.commit()
+        return workout
 
-    def add_workout(self, workout: Workout):
-        self.workouts.append(workout)
+    def get_all_workouts(self) -> List[Workout]:
+        return Workout.query.all()
 
-    def get_all_workouts(self):
-        return self.workouts
+    def get_workout_by_id(self, workout_id: int) -> Workout | None:
+        return Workout.query.get(workout_id)
 
-    def get_workout_by_id(self, workout_id: int):
-        for workout in self.workouts:
-            if workout.id == workout_id:
-                return workout
-        return None
+    def update_workout(self, workout: Workout) -> Workout:
+        db.session.commit()
+        return workout
 
-    def update_workout(self, workout_id: int, updated_workout: Workout):
-        for i, workout in enumerate(self.workouts):
-            if workout.id == workout_id:
-                self.workouts[i] = updated_workout
-                return True
+    def delete_workout(self, workout_id: int) -> bool:
+        workout = self.get_by_id(workout_id)
+        if workout:
+            db.session.delete(workout)
+            db.session.commit()
+            return True
         return False
-
-    def delete_workout(self, workout_id: int):
-        for i, workout in enumerate(self.workouts):
-            if workout.id == workout_id:
-                del self.workouts[i]
-                return True
-        return False
+    
+    # TODO:ジム入退時刻追加更新

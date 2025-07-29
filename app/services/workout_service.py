@@ -6,10 +6,11 @@ class WorkoutService:
         self.workout_repository = WorkoutRepository()
 
     def get_all_workouts(self):
-        return self.workout_repository.get_all()
+        return self.workout_repository.get_all_workouts()
 
     def get_workout_by_id(self, workout_id):
-        workout = self.workout_repository.get_by_id(workout_id)
+        workout = self.workout_repository.get_workout_by_id(workout_id)
         if not workout:
             return None
         return workout
+    # TODO:Workout追加、更新、ジム入退時刻追加更新
