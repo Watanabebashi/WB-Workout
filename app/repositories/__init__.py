@@ -1,1 +1,1 @@
-from app.models.workout import Workout
+from .workout_repository import WorkoutRepository
